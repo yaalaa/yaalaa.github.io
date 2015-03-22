@@ -40,7 +40,7 @@ function Scheme() {
   this.inputR = 0;
   this.outputR = 0;
   
-  this.ZERO = "zero";
+  this.ZERO = "0";
   this.INPUT = "input";
   this.OUTPUT = "output";
   this.SOURCE = "source";
@@ -59,9 +59,11 @@ function Scheme() {
     this.areaWholeH = this.areaCenterH + 2 * this.areaExtraH;
     
     // source 
-    this.output += "\nVg " + this.nodes.get(this.SOURCE) + " " + this.nodes.get(this.ZERO) + " AC 1";
+    //this.output += "\nVg " + this.nodes.get(this.SOURCE) + " " + this.nodes.get(this.ZERO) + " AC 1";
+    this.output += "\nVg " + this.SOURCE + " " + this.ZERO + " AC 1";
     // input resistor
-    this.output += "\nRg " + this.nodes.get(this.SOURCE) + " " + this.nodes.get(this.INPUT) + " " + this.inputR;
+    //this.output += "\nRg " + this.nodes.get(this.SOURCE) + " " + this.nodes.get(this.INPUT) + " " + this.inputR;
+    this.output += "\nRg " + this.SOURCE + " " + this.INPUT + " " + this.inputR;
     
     this.output += "\n\n";
 
@@ -179,8 +181,8 @@ function Scheme() {
           break;
         }
         
-        var nameCellRow = dirRow > 0 ? cellRow : cellRow - 1;
-        var nameCellCol = dirCol > 0 ? cellCol : cellCol - 1;
+        var nameCellRow = dirRow >= 0 ? cellRow : cellRow - 1;
+        var nameCellCol = dirCol >= 0 ? cellCol : cellCol - 1;
         
         nodeName = "" + nameCellRow + "x" + nameCellCol;
         
@@ -197,6 +199,8 @@ function Scheme() {
         break;
       }
 
+      console.log("Scheme::getNodeIdx: assigned:(" + cellRow + ", " + cellCol + ")-(" + dirRow + ", " + dirCol+ ") name[" + nodeName + "]");
+/*      
       var nodeIdx = this.nodes.get(nodeName);
 
       if (nodeIdx === undefined) { // not allocated yet
@@ -206,6 +210,8 @@ function Scheme() {
       }
 
       out = nodeIdx;
+*/
+      out = nodeName;
     } while (false);
     
     return out;
