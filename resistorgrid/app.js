@@ -17,6 +17,7 @@ function generate_scheme() {
    scheme.areaExtraH = parseInt(document.getElementById("area_extra_h").value);
    scheme.areaCenterR = document.getElementById("area_center_r").value;
    scheme.areaExtraR = document.getElementById("area_extra_r").value;
+   scheme.areaExtraSymmetric = document.getElementById("area_extra_symmetric").checked;
    scheme.inputR = document.getElementById("input_r").value;
    scheme.outputR = document.getElementById("output_r").value;
     
@@ -36,7 +37,9 @@ function Scheme() {
   this.areaExtraH = 0;
   this.areaCenterR = 0;
   this.areaExtraR = 0;
+  this.areaExtraSymmetric = false;
   this.areaWholeH = 0;
+  this.rowMax = 0;
   this.inputR = 0;
   this.outputR = 0;
   
@@ -67,7 +70,9 @@ function Scheme() {
     
     this.output += "\n\n";
 
-    for (var row = 0; row < this.areaWholeH; row++) {
+    this.rowMax =  this.areaExtraSymmetric ? this.areaWholeH : this.areaCenterH + this.areaExtraH;
+    
+    for (var row = 0; row < this.rowMax; row++) {
       for (var col = 0; col < this.areaCenterW; col++) {
         var cellNodeIdx = this.getNodeIdx(row, col, 0, 0);
         
@@ -116,7 +121,7 @@ function Scheme() {
     var out = undefined;
     
     do {
-      if (cellRow < 0 || cellRow >= this.areaWholeH) { // invalid cell row
+      if (cellRow < 0 || cellRow >= this.areaWholeH || cellRow >= this.rowMax) { // invalid cell row
         console.log("Scheme::getNodeIdx: invalid cell row:" + cellRow);
         break;
       }
@@ -173,6 +178,10 @@ function Scheme() {
         
         if (cellRow === this.areaWholeH - 1 && dirRow > 0) { // bottommost row, direction to the bottom
           nodeName = this.ZERO;
+          break;
+        }
+        
+        if (cellRow === this.rowMax - 1 && dirRow > 0) { // bottommost row, direction to the bottom
           break;
         }
         
