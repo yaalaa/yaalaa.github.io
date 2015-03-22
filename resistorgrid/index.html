@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+
+    <title>Hello World</title>
+
+    <style>
+      body {
+        border: 1px solid black;
+      }
+    </style>
+
+    <!-- Inline scripts are forbidden in Firefox OS apps (CSP restrictions),
+         so we use a script file. -->
+    <script src="app.js" defer></script>
+
+  </head>
+
+  <body>
+    <!-- This code is in the public domain. Enjoy! -->
+    <h1>Решетка из резисторов</h1>
+    
+    <!-- central area height -->
+    <p><b>Высота центральной части:</b><br>
+      <input id="area_center_h" type="text" autocomplete="on" value="4">
+    </p>
+    
+    <!-- central area width -->
+    <p><b>Ширина центральной части:</b><br>
+      <input id="area_center_w" type="text" autocomplete="on" value="4">
+    </p>
+    
+    <!-- additional area height -->
+    <p><b>Высота дополнительной части:</b><br>
+      <input id="area_extra_h" type="text" autocomplete="on" value="1">
+    </p>
+    
+    <!-- central area resistor -->
+    <p><b>Резистор центральной части:</b><br>
+      <input id="area_center_r" type="text" autocomplete="on" value="1.44">
+    </p>
+    
+    <!-- additional area resistor -->
+    <p><b>Резистор дополнительной части:</b><br>
+      <input id="area_extra_r" type="text" autocomplete="on" value="2.88">
+    </p>
+    
+    <!-- input resistor -->
+    <p><b>Резистор входной:</b><br>
+      <input id="input_r" type="text" autocomplete="on" value="0.01">
+    </p>
+    
+    <!-- output resistor -->
+    <p><b>Резистор выходной:</b><br>
+      <input id="output_r" type="text" autocomplete="on" value="50">
+    </p>
+
+    <!-- generate button -->
+    <p>
+      <button id="btn_gen"><b>Сгенерировать</b></button>
+    </p>
+    
+    <!-- scheme -->
+    <p><b>Схема:</b><br>
+      <textarea id="scheme" style="width:100%;" rows="5"></textarea>
+    </p>
+    
+    </form>
+      
+  </body>
+
+</html>
