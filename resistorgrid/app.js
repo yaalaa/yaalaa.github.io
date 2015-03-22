@@ -104,7 +104,7 @@ function Scheme() {
     this.output += "\n\n";
     
     // output resistor
-    this.output += "\nRout " + this.nodes.get(this.OUTPUT) + " " + this.nodes.get(this.ZERO) + " " + this.outputR;
+    this.output += "\nRout " + this.OUTPUT + " " + this.ZERO + " " + this.outputR;
     
     this.output += "\n\n";
     
