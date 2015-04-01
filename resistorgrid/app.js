@@ -20,6 +20,7 @@ function generate_scheme() {
    scheme.areaExtraSymmetric = document.getElementById("area_extra_symmetric").checked;
    scheme.inputR = document.getElementById("input_r").value;
    scheme.outputR = document.getElementById("output_r").value;
+   scheme.schemeType = document.getElementById("scheme_type").value;
     
    out = scheme.generate();
    
@@ -42,6 +43,11 @@ function Scheme() {
   this.rowMax = 0;
   this.inputR = 0;
   this.outputR = 0;
+  this.schemeType = "";
+
+  this.SCHEME_NORMAL = "normal";
+  this.SCHEME_INPUT = "input";
+  this.SCHEME_SEQUENTIAL = "sequential";
   
   this.ZERO = "0";
   this.INPUT = "input";
@@ -56,14 +62,27 @@ function Scheme() {
   this.nodes.set(this.INPUT, ++this.lastNodeIdx);
   this.nodes.set(this.OUTPUT, ++this.lastNodeIdx);
   
+  this.nodeOut = this.OUTPUT;
+  
   this.output = "";
   
   this.generate = function() {
     this.areaWholeH = this.areaCenterH + 2 * this.areaExtraH;
+
+    this.output += "* schemeType: " + this.schemeType + "\n\n";
+    
+    
+    // setup for scheme type
+    nodeSourceBase = this.ZERO;
+    
+    if (this.schemeType == this.SCHEME_INPUT) {
+      this.nodeOut = this.INPUT;
+    } else if (this.schemeType == this.SCHEME_SEQUENTIAL) {
+      nodeSourceBase = this.OUTPUT;
+    }
     
     // source 
-    //this.output += "\nVg " + this.nodes.get(this.SOURCE) + " " + this.nodes.get(this.ZERO) + " AC 1";
-    this.output += "\nVg " + this.SOURCE + " " + this.ZERO + " AC 1";
+    this.output += "\nVg " + this.SOURCE + " " + nodeSourceBase + " AC 1";
     // input resistor
     //this.output += "\nRg " + this.nodes.get(this.SOURCE) + " " + this.nodes.get(this.INPUT) + " " + this.inputR;
     this.output += "\nRg " + this.SOURCE + " " + this.INPUT + " " + this.inputR;
@@ -109,7 +128,9 @@ function Scheme() {
     this.output += "\n\n";
     
     // output resistor
-    this.output += "\nRout " + this.OUTPUT + " " + this.ZERO + " " + this.outputR;
+    if (this.schemeType == this.SCHEME_NORMAL) {
+      this.output += "\nRout " + this.OUTPUT + " " + this.ZERO + " " + this.outputR;
+    }
     
     this.output += "\n\n";
     
@@ -167,7 +188,7 @@ function Scheme() {
             break;
           }
           
-          nodeName = this.OUTPUT;
+          nodeName = this.nodeOut;
           break;
         }
         
